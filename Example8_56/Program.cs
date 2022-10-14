@@ -4,16 +4,8 @@ Write("Введите размер матрицы, минимальное и м�
 int[] parameters = GetArrayInString(ReadLine()!);
 int[,] MyMatrix = GetMatrixArray(parameters[0], parameters[1], parameters[2], parameters[3]);
 PrintMatrix(MyMatrix);
-GetSortArrey(MyMatrix);
 WriteLine();
-PrintMatrix(MyMatrix);
-
-
-
-
-
-
-
+WriteLine($"Строка с наименьшей суммой элементов - {GetMinSumRow(MyMatrix)}");
 
 
 
@@ -61,23 +53,26 @@ int[] GetArrayInString(string parameters)
     return parametrNum;
 }
 
-
-void GetSortArrey(int[,] noSortMatrix)
+int GetMinSumRow(int[,] newArray)
 {
-    for (int i = 0; i < noSortMatrix.GetLength(0); i++)
+    int minRow = 0;
+    int minSumma = 0;
+    for (int i = 0; i < newArray.GetLength(1); i++)
     {
-        for (int j = 0; j < noSortMatrix.GetLength(1); j++)
+        minSumma = minSumma + newArray[0, i];
+    }
+    for (int i = 1; i < newArray.GetLength(0); i++)
+    {
+        int summa = 0;
+        for (int j = 0; j < newArray.GetLength(1); j++)
         {
-            for (int k = 0; k < noSortMatrix.GetLength(1) - 1; k++)
+            summa = summa + newArray[i, j];
+            if (minSumma > summa)
             {
-                if (noSortMatrix[i, k] < noSortMatrix[i, k + 1])
-                {
-                    int temp = noSortMatrix[i, k + 1];
-                    noSortMatrix[i, k + 1] = noSortMatrix[i, k];
-                    noSortMatrix[i, k] = temp;
-                }
+                minSumma = summa;
+                minRow = i;
             }
         }
-
     }
+    return minRow;
 }
